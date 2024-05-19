@@ -1,14 +1,15 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:convert';
 
 class AuthResponseModel {
-  final bool? status;
   final String? message;
-  final Data? data;
+  final User? user;
+  final String? token;
 
   AuthResponseModel({
-    this.status,
     this.message,
-    this.data,
+    this.user,
+    this.token,
   });
 
   factory AuthResponseModel.fromJson(String str) =>
@@ -18,40 +19,28 @@ class AuthResponseModel {
 
   factory AuthResponseModel.fromMap(Map<String, dynamic> json) =>
       AuthResponseModel(
-        status: json["status"],
         message: json["message"],
-        data: json["data"] == null ? null : Data.fromMap(json["data"]),
-      );
-
-  Map<String, dynamic> toMap() => {
-        "status": status,
-        "message": message,
-        "data": data?.toMap(),
-      };
-}
-
-class Data {
-  final User? user;
-  final String? token;
-
-  Data({
-    this.user,
-    this.token,
-  });
-
-  factory Data.fromJson(String str) => Data.fromMap(json.decode(str));
-
-  String toJson() => json.encode(toMap());
-
-  factory Data.fromMap(Map<String, dynamic> json) => Data(
         user: json["user"] == null ? null : User.fromMap(json["user"]),
         token: json["token"],
       );
 
   Map<String, dynamic> toMap() => {
+        "message": message,
         "user": user?.toMap(),
         "token": token,
       };
+
+  AuthResponseModel copyWith({
+    String? message,
+    User? user,
+    String? token,
+  }) {
+    return AuthResponseModel(
+      message: message ?? this.message,
+      user: user ?? this.user,
+      token: token ?? this.token,
+    );
+  }
 }
 
 class User {
@@ -68,7 +57,7 @@ class User {
   final dynamic twoFactorSecret;
   final dynamic twoFactorRecoveryCodes;
   final dynamic twoFactorConfirmedAt;
-  final dynamic faceEmbedding;
+  final String? faceEmbedding;
   final dynamic imageUrl;
   final DateTime? createdAt;
   final DateTime? updatedAt;

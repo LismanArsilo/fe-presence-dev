@@ -117,10 +117,12 @@ class _LoginPageState extends State<LoginPage> {
                       return Button.filled(
                           onPressed: () {
                             // context.pushReplacement(const MainPage());
-                            context.read<LoginBloc>().add(LoginEvent.login(
-                                  emailController.text,
-                                  passwordController.text,
-                                ));
+                            context.read<LoginBloc>().add(
+                                  LoginEvent.login(
+                                    emailController.text,
+                                    passwordController.text,
+                                  ),
+                                );
                           },
                           label: 'Sign In');
                     },

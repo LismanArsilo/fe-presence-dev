@@ -6,6 +6,7 @@ import 'package:presence_flutter_app/data/datasources/auth_remote_datasource.dar
 import 'package:presence_flutter_app/persentation/auth/bloc/login/login_bloc.dart';
 import 'package:presence_flutter_app/persentation/auth/bloc/logout/logout_bloc.dart';
 import 'package:presence_flutter_app/persentation/auth/pages/splash_page.dart';
+import 'package:presence_flutter_app/persentation/home/bloc/update_user_register_face/update_user_register_face_bloc.dart';
 
 void main() {
   runApp(const MyApp());
@@ -24,6 +25,10 @@ class MyApp extends StatelessWidget {
         ),
         BlocProvider(
           create: (context) => LogoutBloc(AuthRemoteDataResource()),
+        ),
+        BlocProvider(
+          create: (context) =>
+              UpdateUserRegisterFaceBloc(AuthRemoteDataResource()),
         ),
       ],
       child: MaterialApp(
