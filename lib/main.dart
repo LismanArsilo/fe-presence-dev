@@ -2,10 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:presence_flutter_app/core/constants/colors.dart';
+import 'package:presence_flutter_app/data/datasources/attendance_remote_datasource.dart';
 import 'package:presence_flutter_app/data/datasources/auth_remote_datasource.dart';
 import 'package:presence_flutter_app/persentation/auth/bloc/login/login_bloc.dart';
 import 'package:presence_flutter_app/persentation/auth/bloc/logout/logout_bloc.dart';
 import 'package:presence_flutter_app/persentation/auth/pages/splash_page.dart';
+import 'package:presence_flutter_app/persentation/home/bloc/check_in_attendance/check_in_attendance_bloc.dart';
+import 'package:presence_flutter_app/persentation/home/bloc/check_out_attendance/check_out_attendance_bloc.dart';
+import 'package:presence_flutter_app/persentation/home/bloc/get_company/get_company_bloc.dart';
+import 'package:presence_flutter_app/persentation/home/bloc/is_check_in/is_check_in_bloc.dart';
 import 'package:presence_flutter_app/persentation/home/bloc/update_user_register_face/update_user_register_face_bloc.dart';
 
 void main() {
@@ -29,6 +34,20 @@ class MyApp extends StatelessWidget {
         BlocProvider(
           create: (context) =>
               UpdateUserRegisterFaceBloc(AuthRemoteDataResource()),
+        ),
+        BlocProvider(
+          create: (context) => GetCompanyBloc(AttendanceRemoteDataResource()),
+        ),
+        BlocProvider(
+          create: (context) => IsCheckInBloc(AttendanceRemoteDataResource()),
+        ),
+        BlocProvider(
+          create: (context) =>
+              CheckInAttendanceBloc(AttendanceRemoteDataResource()),
+        ),
+        BlocProvider(
+          create: (context) =>
+              CheckOutAttendanceBloc(AttendanceRemoteDataResource()),
         ),
       ],
       child: MaterialApp(

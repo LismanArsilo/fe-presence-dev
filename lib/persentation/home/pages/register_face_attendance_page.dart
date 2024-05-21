@@ -43,10 +43,10 @@ class _RegisterFaceAttendancePageState
 
   late List<RecognitionEmbedding> recognitions = [];
 
-  // TODO declare face detector
+  // declare face detector
   late FaceDetector detector;
 
-  // TODO declare face recognizer
+  // declare face recognizer
   late Recognizer recognizer;
 
   bool isBusy = false;

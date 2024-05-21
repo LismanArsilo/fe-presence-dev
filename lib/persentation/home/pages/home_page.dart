@@ -1,6 +1,9 @@
+import 'package:detect_fake_location/detect_fake_location.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:presence_flutter_app/data/datasources/auth_local_datasource.dart';
+import 'package:presence_flutter_app/persentation/home/pages/attendance_checkin_page.dart';
+import 'package:presence_flutter_app/persentation/home/pages/attendance_checkout_page.dart';
 import 'package:presence_flutter_app/persentation/home/pages/register_face_attendance_page.dart';
 import 'package:presence_flutter_app/persentation/home/pages/setting_page.dart';
 // import 'package:presence_flutter_app/presentation/home/pages/register_face_attendance_page.dart';
@@ -88,14 +91,6 @@ class _HomePageState extends State<HomePage> {
                           );
                         }
                       },
-                      // child: Text(
-                      //   'Hello, Chopper Sensei',
-                      //   style: TextStyle(
-                      //     fontSize: 18.0,
-                      //     color: AppColors.white,
-                      //   ),
-                      //   maxLines: 2,
-                      // ),
                     ),
                   ),
                   IconButton(
@@ -164,12 +159,64 @@ class _HomePageState extends State<HomePage> {
                     MenuButton(
                       label: 'Datang',
                       iconPath: Assets.icons.menu.datang.path,
-                      onPressed: () {},
+                      onPressed: () async {
+                        bool isFakeLocation =
+                            await DetectFakeLocation().detectFakeLocation();
+                        if (isFakeLocation) {
+                          showDialog(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return AlertDialog(
+                                title: const Text('Fake Location Detected'),
+                                content: const Text(
+                                    'Please disable fake location to procced'),
+                                actions: <Widget>[
+                                  TextButton(
+                                    child: const Text('OK'),
+                                    onPressed: () {
+                                      Navigator.of(context).pop();
+                                    },
+                                  )
+                                ],
+                              );
+                            },
+                          );
+                        } else {
+                          // Go To Checkin
+                          context.push(const AttendaceCheckInPage());
+                        }
+                      },
                     ),
                     MenuButton(
                       label: 'Pulang',
                       iconPath: Assets.icons.menu.pulang.path,
-                      onPressed: () {},
+                      onPressed: () async {
+                        bool isFakeLocation =
+                            await DetectFakeLocation().detectFakeLocation();
+                        if (isFakeLocation) {
+                          showDialog(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return AlertDialog(
+                                title: const Text('Fake Location Detected'),
+                                content: const Text(
+                                    'Please disable fake location to procced'),
+                                actions: <Widget>[
+                                  TextButton(
+                                    child: const Text('OK'),
+                                    onPressed: () {
+                                      Navigator.of(context).pop();
+                                    },
+                                  )
+                                ],
+                              );
+                            },
+                          );
+                        } else {
+                          // Go To Checkin
+                          context.push(const AttendanceCheckOutPage());
+                        }
+                      },
                     ),
                     MenuButton(
                       label: 'Izin',
@@ -193,7 +240,7 @@ class _HomePageState extends State<HomePage> {
                             content: Center(
                               child: Text('Anda Sudah Terdaftar'),
                             ),
-                            backgroundColor: AppColors.red,
+                            backgroundColor: AppColors.green,
                           ),
                         );
                       },

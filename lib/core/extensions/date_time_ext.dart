@@ -25,7 +25,7 @@ const List<String> _monthNames = [
 
 extension DateTimeExt on DateTime {
   String toFormattedDate() {
-    String dayName = _dayNames[weekday - 1];
+    String dayName = _dayNames[weekday];
     String day = this.day.toString();
     String month = _monthNames[this.month - 1];
     String year = this.year.toString();

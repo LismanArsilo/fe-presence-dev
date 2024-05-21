@@ -103,7 +103,7 @@ class Recognizer {
             .map((e) => double.parse(e))
             .toList()
             .cast<double>());
-    if (pair.distance > 1.0) {
+    if (pair.distance < 0.85) {
       return true;
     }
     return false;

@@ -9,18 +9,19 @@ import 'package:presence_flutter_app/data/datasources/auth_local_datasource.dart
 import 'package:presence_flutter_app/data/models/response/auth_response_model.dart';
 import 'package:presence_flutter_app/data/models/response/user_response_model.dart';
 
-class ErrorResponse {
+class ErrorResponseModel {
   final bool? status;
   final String? message;
 
-  ErrorResponse({this.status, this.message});
+  ErrorResponseModel({this.status, this.message});
 
-  factory ErrorResponse.fromJson(String str) =>
-      ErrorResponse.fromMap(json.decode(str));
+  factory ErrorResponseModel.fromJson(String str) =>
+      ErrorResponseModel.fromMap(json.decode(str));
 
   String toJson() => json.encode(toMap());
 
-  factory ErrorResponse.fromMap(Map<String, dynamic> json) => ErrorResponse(
+  factory ErrorResponseModel.fromMap(Map<String, dynamic> json) =>
+      ErrorResponseModel(
         status: json['status'],
         message: json['message'],
       );
@@ -32,7 +33,7 @@ class ErrorResponse {
 }
 
 class AuthRemoteDataResource {
-  Future<Either<dynamic, AuthResponseModel>> login(
+  Future<Either<ErrorResponseModel, AuthResponseModel>> login(
       String email, String password) async {
     final url = Uri.parse('${Variables.baseUrl}/login');
     final response = await http.post(url,
@@ -44,10 +45,8 @@ class AuthRemoteDataResource {
 
     if (response.statusCode == 200) {
       return Right(AuthResponseModel.fromJson(response.body));
-    } else if (response.statusCode == 422) {
-      return const Left('Please Check Field Required');
     } else {
-      return const Left('Invalid Credentials');
+      return Left(ErrorResponseModel.fromJson(response.body));
     }
   }
 

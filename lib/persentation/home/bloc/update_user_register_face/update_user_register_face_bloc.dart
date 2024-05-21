@@ -13,15 +13,20 @@ class UpdateUserRegisterFaceBloc
   final AuthRemoteDataResource authRemoteDataSource;
   UpdateUserRegisterFaceBloc(
     this.authRemoteDataSource,
-  ) : super(_Initial()) {
+  ) : super(const _Initial()) {
     on<_UpdateProfileRegisterFace>((event, emit) async {
       emit(const _Loading());
       try {
         final user = await authRemoteDataSource.updateProfileRegisterFace(
             event.embedded, event?.image);
-        user.fold((l) => emit(_Error(l)), (r) => emit(_Success(r)));
+        user.fold(
+          (l) => emit(_Error(l)),
+          (r) => emit(_Success(r)),
+        );
       } catch (e) {
-        emit(_Error(e.toString()));
+        emit(
+          _Error(e.toString()),
+        );
       }
     });
   }

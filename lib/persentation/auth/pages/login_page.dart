@@ -50,7 +50,7 @@ class _LoginPageState extends State<LoginPage> {
               const SpaceHeight(107),
               CustomTextField(
                 controller: emailController,
-                label: 'Email Address',
+                label: 'Email Address *',
                 showLabel: false,
                 prefixIcon: Padding(
                   padding: const EdgeInsets.all(8.0),
@@ -64,7 +64,7 @@ class _LoginPageState extends State<LoginPage> {
               const SpaceHeight(20),
               CustomTextField(
                 controller: passwordController,
-                label: 'Password',
+                label: 'Password *',
                 showLabel: false,
                 obscureText: !isShowPassword,
                 prefixIcon: Padding(
@@ -101,7 +101,7 @@ class _LoginPageState extends State<LoginPage> {
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(
                           content: Center(
-                            child: Text(errorMessage),
+                            child: Text(errorMessage.message!),
                           ),
                           backgroundColor: AppColors.red,
                         ),
